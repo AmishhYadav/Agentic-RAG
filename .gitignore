@@ -1,0 +1,26 @@
+# Secrets
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# Data & Artifacts
+embeddings/
+data/documents/
+*.faiss
+*.pkl
+
+# IDEs
+.idea/
+.vscode/
+.DS_Store
+
+# Logs
+*.log

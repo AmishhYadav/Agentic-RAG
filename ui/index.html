@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic RAG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/ui/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <span class="logo-icon">✨</span>
+                <h1>Agentic RAG System</h1>
+            </div>
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span class="status-text">System Ready</span>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main>
+            <!-- Left Panel: Chat Interface -->
+            <section class="chat-section">
+                <div class="chat-history" id="chat-history">
+                    <div class="message system">
+                        <div class="avatar">🤖</div>
+                        <div class="content">Hello! I'm your Agentic RAG assistant. Ask me anything about AWS, Bedrock, or Security. I'll decide autonomously if I need to retrieve documents.</div>
+                    </div>
+                </div>
+                
+                <div class="input-area">
+                    <form id="query-form">
+                        <input type="text" id="query-input" placeholder="Ask a question..." autocomplete="off">
+                        <button type="submit" id="send-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Right Panel: Agent Logic Viz -->
+            <section class="viz-section">
+                <div class="viz-header">
+                    <h2>Agent Reasoning Stream</h2>
+                    <span class="live-badge">LIVE</span>
+                </div>
+                <div class="steps-container" id="steps-container">
+                    <!-- Steps will appear here dynamically -->
+                    <div class="step-placeholder">Waiting for query...</div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="/ui/script.js"></script>
+</body>
+</html>
