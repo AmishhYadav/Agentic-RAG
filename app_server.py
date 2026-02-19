@@ -44,9 +44,9 @@ async def stream_query(q: str):
     """
     async def event_generator():
         try:
-            for event in router.process_query(q):
+            async for event in router.process_query(q):
                 yield json.dumps(event)
-                await asyncio.sleep(0.1)
+                await asyncio.sleep(0.05)
         except Exception as e:
             yield json.dumps({"step": "error", "message": str(e)})
 
