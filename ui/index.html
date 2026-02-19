@@ -3,60 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agentic RAG</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Agentic RAG | Intelligent Document Assistant</title>
+    <meta name="description" content="Production-grade Agentic RAG system with autonomous agents for intelligent query processing, retrieval, synthesis, and verification.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/ui/styles.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <header>
-            <div class="logo">
-                <span class="logo-icon">✨</span>
-                <h1>Agentic RAG System</h1>
+    <div class="app-shell">
+        <!-- ─── Sidebar ─── -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-logo">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#brandGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <defs><linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3d8bff"/><stop offset="100%" stop-color="#9d5cff"/></linearGradient></defs>
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                </div>
+                <span class="brand-name">Agentic<span class="brand-highlight">RAG</span></span>
             </div>
-            <div class="status-indicator">
-                <span class="status-dot"></span>
-                <span class="status-text">System Ready</span>
-            </div>
-        </header>
 
-        <!-- Main Content Grid -->
-        <main>
-            <!-- Left Panel: Chat Interface -->
-            <section class="chat-section">
-                <div class="chat-history" id="chat-history">
-                    <div class="message system">
-                        <div class="avatar">🤖</div>
-                        <div class="content">Hello! I'm your Agentic RAG assistant. Ask me anything about AWS, Bedrock, or Security. I'll decide autonomously if I need to retrieve documents.</div>
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <span class="section-label">Workspace</span>
+                    <button class="menu-item active" data-panel="chat" id="nav-chat">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        </span>
+                        <span class="menu-text">Chat</span>
+                    </button>
+                    <button class="menu-item" data-panel="documents" id="nav-docs">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        </span>
+                        <span class="menu-text">Documents</span>
+                        <span class="menu-badge" id="doc-count">0</span>
+                    </button>
+                </div>
+
+                <div class="menu-section">
+                    <span class="section-label">System</span>
+                    <button class="menu-item" data-panel="settings" id="nav-settings">
+                        <span class="menu-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        </span>
+                        <span class="menu-text">Settings</span>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-dot online" id="status-dot"></span>
+                    <span class="status-label" id="status-label">System Ready</span>
+                </div>
+                <div class="provider-badge" id="provider-badge">
+                    <span>MOCK</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ─── Main Content ─── -->
+        <div class="main-content">
+            <!-- ─── Chat Panel (default visible) ─── -->
+            <div class="panel active" id="panel-chat">
+                <div class="panel-layout">
+                    <!-- Chat Area -->
+                    <section class="chat-area">
+                        <header class="chat-topbar">
+                            <div class="topbar-left">
+                                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                                </button>
+                                <h2 class="topbar-title">Intelligence Session</h2>
+                            </div>
+                            <div class="topbar-right">
+                                <button class="topbar-btn" id="clear-chat-btn" title="Clear conversation">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                    <span>Clear</span>
+                                </button>
+                                <button class="topbar-btn" id="toggle-reasoning-btn" title="Toggle reasoning panel">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+                                    <span>Reasoning</span>
+                                </button>
+                            </div>
+                        </header>
+
+                        <div class="messages-scroll" id="chat-history">
+                            <div class="welcome-card">
+                                <div class="welcome-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="url(#welcomeGrad)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <defs><linearGradient id="welcomeGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3d8bff"/><stop offset="100%" stop-color="#9d5cff"/></linearGradient></defs>
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                    </svg>
+                                </div>
+                                <h3>Welcome to Agentic RAG</h3>
+                                <p>I'm an autonomous AI assistant. I analyze your queries, retrieve relevant documents, synthesize answers, and verify their accuracy — all in real time.</p>
+                                <div class="suggestion-chips">
+                                    <button class="chip" data-query="What is Amazon Bedrock?">What is Amazon Bedrock?</button>
+                                    <button class="chip" data-query="Explain IAM security best practices">IAM Security Best Practices</button>
+                                    <button class="chip" data-query="How does RAG architecture work?">How does RAG work?</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="composer-area">
+                            <form id="query-form" class="composer-form">
+                                <div class="composer-inner">
+                                    <input type="text" id="query-input" placeholder="Ask me anything about your documents..." autocomplete="off" spellcheck="true">
+                                    <button type="submit" id="send-btn" class="send-btn" disabled>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="22" y1="2" x2="11" y2="13"/>
+                                            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="composer-footer">
+                                    <span class="footer-hint">Press Enter to send · Shift+Enter for new line</span>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+
+                    <!-- Reasoning Panel -->
+                    <aside class="reasoning-panel" id="reasoning-panel">
+                        <div class="reasoning-header">
+                            <div class="reasoning-title">
+                                <span class="pulse-dot"></span>
+                                <h3>Agent Reasoning</h3>
+                            </div>
+                            <span class="live-tag">LIVE</span>
+                        </div>
+                        <div class="reasoning-stream" id="steps-container">
+                            <div class="stream-empty">
+                                <div class="empty-brain">🧠</div>
+                                <p>Agent cognition will appear here when you submit a query.</p>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- ─── Documents Panel ─── -->
+            <div class="panel" id="panel-documents">
+                <div class="docs-view">
+                    <header class="docs-header">
+                        <h2>Knowledge Base</h2>
+                        <p class="docs-subtitle">Upload and manage documents for the RAG pipeline</p>
+                    </header>
+                    <div class="upload-zone" id="upload-zone">
+                        <div class="upload-content">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            <p class="upload-label">Drag files here or <span class="upload-browse">browse</span></p>
+                            <p class="upload-hint">Supports .txt, .md, .pdf — Max 10MB per file</p>
+                        </div>
+                        <input type="file" id="file-input" multiple accept=".txt,.md,.pdf" hidden>
+                    </div>
+                    <div class="doc-list" id="doc-list">
+                        <!-- Document items will appear here -->
                     </div>
                 </div>
-                
-                <div class="input-area">
-                    <form id="query-form">
-                        <input type="text" id="query-input" placeholder="Ask a question..." autocomplete="off">
-                        <button type="submit" id="send-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                            </svg>
-                        </button>
-                    </form>
-                </div>
-            </section>
+            </div>
 
-            <!-- Right Panel: Agent Logic Viz -->
-            <section class="viz-section">
-                <div class="viz-header">
-                    <h2>Agent Reasoning Stream</h2>
-                    <span class="live-badge">LIVE</span>
+            <!-- ─── Settings Panel ─── -->
+            <div class="panel" id="panel-settings">
+                <div class="settings-view">
+                    <header class="settings-header">
+                        <h2>Configuration</h2>
+                        <p class="settings-subtitle">Manage LLM provider and system parameters</p>
+                    </header>
+                    <div class="settings-grid">
+                        <div class="setting-card">
+                            <div class="setting-label">LLM Provider</div>
+                            <div class="setting-control">
+                                <select id="setting-provider" class="setting-select">
+                                    <option value="mock">Mock (Local Testing)</option>
+                                    <option value="bedrock">AWS Bedrock (Production)</option>
+                                </select>
+                            </div>
+                            <p class="setting-desc">Switch between local mock responses and production AWS Bedrock.</p>
+                        </div>
+                        <div class="setting-card">
+                            <div class="setting-label">AWS Region</div>
+                            <div class="setting-control">
+                                <select id="setting-region" class="setting-select">
+                                    <option value="us-east-1">US East (N. Virginia)</option>
+                                    <option value="us-west-2">US West (Oregon)</option>
+                                    <option value="eu-west-1">EU (Ireland)</option>
+                                    <option value="ap-southeast-1">Asia Pacific (Singapore)</option>
+                                </select>
+                            </div>
+                            <p class="setting-desc">AWS region for Bedrock API calls.</p>
+                        </div>
+                        <div class="setting-card">
+                            <div class="setting-label">Temperature</div>
+                            <div class="setting-control range-control">
+                                <input type="range" id="setting-temperature" min="0" max="1" step="0.1" value="0.1" class="setting-range">
+                                <span class="range-value" id="temp-value">0.1</span>
+                            </div>
+                            <p class="setting-desc">Controls randomness. Lower = more deterministic.</p>
+                        </div>
+                        <div class="setting-card">
+                            <div class="setting-label">Retrieval Chunks (k)</div>
+                            <div class="setting-control range-control">
+                                <input type="range" id="setting-k" min="1" max="10" step="1" value="3" class="setting-range">
+                                <span class="range-value" id="k-value">3</span>
+                            </div>
+                            <p class="setting-desc">Number of document chunks to retrieve per query.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="steps-container" id="steps-container">
-                    <!-- Steps will appear here dynamically -->
-                    <div class="step-placeholder">Waiting for query...</div>
-                </div>
-            </section>
-        </main>
+            </div>
+        </div>
     </div>
     <script src="/ui/script.js"></script>
 </body>
