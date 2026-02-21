@@ -1,11 +1,14 @@
 import json
-from typing import Dict, Any
+from typing import Any, Dict
+
 from core.llm_interface import LLMProvider
+
 
 class QueryAgent:
     """
     Analyzes the user query to determine intent and retrieval strategy.
     """
+
     def __init__(self, llm: LLMProvider):
         self.llm = llm
 
@@ -21,9 +24,9 @@ class QueryAgent:
             "Return your decision in strict JSON format: "
             '{"needs_retrieval": bool, "retrieval_strategy": "vector_similarity" | null, "reasoning": str}'
         )
-        
+
         response = self.llm.generate(system_prompt, query, temperature=0.0)
-        
+
         try:
             # Clean up potential markdown code blocks if the LLM adds them
             clean_response = response.replace("```json", "").replace("```", "").strip()
@@ -34,5 +37,5 @@ class QueryAgent:
             return {
                 "needs_retrieval": True,
                 "retrieval_strategy": "vector_similarity",
-                "reasoning": "Error parsing LLM response, defaulting to retrieval."
+                "reasoning": "Error parsing LLM response, defaulting to retrieval.",
             }

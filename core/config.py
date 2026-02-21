@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -22,8 +23,13 @@ AWS_PROFILE = os.getenv("AWS_PROFILE", "default")
 
 # Model Configuration
 EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
-BEDROCK_MODEL_ID_SMART = "us.anthropic.claude-3-7-sonnet-20250219-v1:0"   # Synthesis (accurate)
-BEDROCK_MODEL_ID_FAST  = "us.anthropic.claude-3-5-haiku-20241022-v1:0"    # Router & Verifier (fast)
+BEDROCK_MODEL_ID_SMART = (
+    "us.anthropic.claude-3-7-sonnet-20250219-v1:0"  # Synthesis (accurate)
+)
+BEDROCK_MODEL_ID_FAST = (
+    "us.anthropic.claude-3-5-haiku-20241022-v1:0"  # Router & Verifier (fast)
+)
+
 
 def get_llm_config(tier: str = "smart"):
     """Return LLM config. tier='smart' for Sonnet, tier='fast' for Haiku."""
@@ -32,8 +38,9 @@ def get_llm_config(tier: str = "smart"):
         "provider": LLM_PROVIDER,
         "region": AWS_REGION,
         "model_id": model_id,
-        "tier": tier
+        "tier": tier,
     }
+
 
 def print_config():
     print(f"--- Configuration ---")

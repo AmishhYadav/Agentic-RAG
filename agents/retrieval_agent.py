@@ -1,14 +1,18 @@
-import faiss
 import pickle
+from typing import Any, Dict, List
+
+import faiss
 import numpy as np
-from typing import List, Dict, Any
 from sentence_transformers import SentenceTransformer
-from core.config import FAISS_INDEX_PATH, EMBEDDING_MODEL_NAME
+
+from core.config import EMBEDDING_MODEL_NAME, FAISS_INDEX_PATH
+
 
 class RetrievalAgent:
     """
     Handles similarity search against the FAISS index.
     """
+
     def __init__(self):
         self.model = SentenceTransformer(EMBEDDING_MODEL_NAME)
         self.index = None
@@ -21,7 +25,7 @@ class RetrievalAgent:
         try:
             index_file = str(FAISS_INDEX_PATH) + ".bin"
             meta_file = str(FAISS_INDEX_PATH) + "_meta.pkl"
-            
+
             self.index = faiss.read_index(index_file)
             with open(meta_file, "rb") as f:
                 data = pickle.load(f)
@@ -38,15 +42,19 @@ class RetrievalAgent:
             return [{"content": "No index available.", "source": "system"}]
 
         query_embedding = self.model.encode([query])
-        distances, indices = self.index.search(np.array(query_embedding).astype("float32"), k)
-        
+        distances, indices = self.index.search(
+            np.array(query_embedding).astype("float32"), k
+        )
+
         results = []
         for i, idx in enumerate(indices[0]):
             if idx != -1:
-                results.append({
-                    "content": self.documents[idx],
-                    "source": self.sources[idx],
-                    "score": float(distances[0][i])
-                })
-        
+                results.append(
+                    {
+                        "content": self.documents[idx],
+                        "source": self.sources[idx],
+                        "score": float(distances[0][i]),
+                    }
+                )
+
         return results
