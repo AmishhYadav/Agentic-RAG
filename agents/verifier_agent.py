@@ -12,16 +12,12 @@ class VerifierAgent:
     def __init__(self, llm: LLMProvider):
         self.llm = llm
 
-    def verify(
-        self, query: str, answer: str, context: List[Dict[str, Any]]
-    ) -> Dict[str, Any]:
+    def verify(self, query: str, answer: str, context: List[Dict[str, Any]]) -> Dict[str, Any]:
         """
         Checks answer validity.
         Returns dict: {"is_valid": bool, "reasoning": str}
         """
-        context_str = "\n\n".join(
-            [f"Source ({c['source']}): {c['content']}" for c in context]
-        )
+        context_str = "\n\n".join([f"Source ({c['source']}): {c['content']}" for c in context])
 
         system_prompt = (
             "You are a Verification Agent. Verify the following answer against "

@@ -42,9 +42,7 @@ class TestAgentFlow(unittest.TestCase):
         self.assertIn("verifier_agent", steps)
 
         # Verify Context
-        self.assertTrue(
-            len(response["context_used"]) > 0, "Should have retrieved context"
-        )
+        self.assertTrue(len(response["context_used"]) > 0, "Should have retrieved context")
 
     def test_no_retrieval_needed(self):
         """Test Case 3: No Retrieval Needed (Chitchat)"""
@@ -54,9 +52,7 @@ class TestAgentFlow(unittest.TestCase):
 
         steps = [e["step"] for e in events]
         self.assertIn("query_agent", steps)
-        self.assertNotIn(
-            "retrieval_agent", steps, "Retrieval should be skipped for chitchat"
-        )
+        self.assertNotIn("retrieval_agent", steps, "Retrieval should be skipped for chitchat")
         self.assertIn("synthesis_agent", steps)
 
     def test_general_knowledge(self):

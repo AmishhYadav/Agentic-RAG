@@ -42,9 +42,7 @@ class RetrievalAgent:
             return [{"content": "No index available.", "source": "system"}]
 
         query_embedding = self.model.encode([query])
-        distances, indices = self.index.search(
-            np.array(query_embedding).astype("float32"), k
-        )
+        distances, indices = self.index.search(np.array(query_embedding).astype("float32"), k)
 
         results = []
         for i, idx in enumerate(indices[0]):

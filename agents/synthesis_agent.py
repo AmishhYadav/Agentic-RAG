@@ -15,9 +15,7 @@ class SynthesisAgent:
         """
         Generates the answer.
         """
-        context_str = "\n\n".join(
-            [f"Source ({c['source']}): {c['content']}" for c in context]
-        )
+        context_str = "\n\n".join([f"Source ({c['source']}): {c['content']}" for c in context])
 
         system_prompt = (
             "You are a Synthesis Agent. Your task is to synthesize an answer to the user's query "

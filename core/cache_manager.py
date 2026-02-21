@@ -19,9 +19,7 @@ DEFAULT_THRESHOLD = 0.96
 
 
 class SemanticCache:
-    def __init__(
-        self, db_path: Path = CACHE_DB_PATH, threshold: float = DEFAULT_THRESHOLD
-    ):
+    def __init__(self, db_path: Path = CACHE_DB_PATH, threshold: float = DEFAULT_THRESHOLD):
         self.threshold = threshold
         self.db_path = db_path
         self.db_path.parent.mkdir(parents=True, exist_ok=True)

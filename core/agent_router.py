@@ -84,13 +84,9 @@ class AgentRouter:
         }
 
         analysis_future = loop.run_in_executor(None, self.query_agent.analyze, query)
-        retrieval_future = loop.run_in_executor(
-            None, self.retrieval_agent.retrieve, query
-        )
+        retrieval_future = loop.run_in_executor(None, self.retrieval_agent.retrieve, query)
 
-        analysis, speculative_context = await asyncio.gather(
-            analysis_future, retrieval_future
-        )
+        analysis, speculative_context = await asyncio.gather(analysis_future, retrieval_future)
 
         yield {"step": "query_agent", "message": "Analysis Complete.", "data": analysis}
 
@@ -114,9 +110,7 @@ class AgentRouter:
             "step": "router",
             "message": "Delegating to Synthesis Agent (Smart model)...",
         }
-        answer = await loop.run_in_executor(
-            None, self.synthesis_agent.synthesize, query, context
-        )
+        answer = await loop.run_in_executor(None, self.synthesis_agent.synthesize, query, context)
         yield {
             "step": "synthesis_agent",
             "message": "Answer generated.",

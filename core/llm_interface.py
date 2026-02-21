@@ -9,9 +9,7 @@ class LLMProvider(ABC):
     """Abstract base class for LLM providers."""
 
     @abstractmethod
-    def generate(
-        self, system_prompt: str, user_prompt: str, temperature: float = 0.0
-    ) -> str:
+    def generate(self, system_prompt: str, user_prompt: str, temperature: float = 0.0) -> str:
         """Generates a response from the LLM."""
         pass
 
@@ -19,9 +17,7 @@ class LLMProvider(ABC):
 class MockLLM(LLMProvider):
     """Local rule-based LLM for development and testing."""
 
-    def generate(
-        self, system_prompt: str, user_prompt: str, temperature: float = 0.0
-    ) -> str:
+    def generate(self, system_prompt: str, user_prompt: str, temperature: float = 0.0) -> str:
         """
         Simulates LLM responses based on keywords in the prompt.
         This allows testing agent logic without actual model calls.
@@ -59,8 +55,7 @@ class MockLLM(LLMProvider):
                         "needs_retrieval": False,
                         "retrieval_strategy": None,
                         "reasoning": (
-                            "Query appears to be general conversation or out of "
-                            "knowledge scope."
+                            "Query appears to be general conversation or out of " "knowledge scope."
                         ),
                     }
                 )
@@ -80,10 +75,7 @@ class MockLLM(LLMProvider):
                     "access to AWS services and resources. You use IAM to control who is "
                     "authenticated (signed in) and authorized (has permissions) to use resources."
                 )
-            elif any(
-                greeting in user_prompt_lower.split()
-                for greeting in ["hi", "hello", "hey"]
-            ):
+            elif any(greeting in user_prompt_lower.split() for greeting in ["hi", "hello", "hey"]):
                 return (
                     "Hello! I am ready to help you with questions about AWS, Bedrock, "
                     "and Security. What would you like to know?"
@@ -120,14 +112,10 @@ class BedrockLLM(LLMProvider):
     """Production LLM using Amazon Bedrock."""
 
     def __init__(self, region_name: str, model_id: str):
-        self.client = boto3.client(
-            service_name="bedrock-runtime", region_name=region_name
-        )
+        self.client = boto3.client(service_name="bedrock-runtime", region_name=region_name)
         self.model_id = model_id
 
-    def generate(
-        self, system_prompt: str, user_prompt: str, temperature: float = 0.0
-    ) -> str:
+    def generate(self, system_prompt: str, user_prompt: str, temperature: float = 0.0) -> str:
         """Invokes Claude 3 via Bedrock API."""
 
         # Construct the body for Claude 3 (Anthropic Messages API)
@@ -158,9 +146,7 @@ def get_llm(config: Dict[str, Any]) -> LLMProvider:
     if provider == "bedrock":
         return BedrockLLM(
             region_name=config.get("region", "us-east-1"),
-            model_id=config.get(
-                "model_id", "us.anthropic.claude-3-7-sonnet-20250219-v1:0"
-            ),
+            model_id=config.get("model_id", "us.anthropic.claude-3-7-sonnet-20250219-v1:0"),
         )
     else:
         return MockLLM()
