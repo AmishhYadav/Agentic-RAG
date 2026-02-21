@@ -1,5 +1,12 @@
+import sys
+from pathlib import Path
+
 from fastapi.testclient import TestClient
-from main import app  # adjust import to match your app
+
+# Add project root to path
+sys.path.append(str(Path(__file__).parent.parent))
+
+from app_server import app  # noqa: E402
 
 client = TestClient(app)
 
@@ -9,6 +16,6 @@ def test_health_check():
     assert response.status_code == 200
 
 
-def test_query_endpoint_exists():
-    response = client.post("/query", json={"query": "test"})
-    assert response.status_code in [200, 422]  # 422 = validation error is fine
+def test_stream_query_endpoint():
+    response = client.get("/stream_query?q=test")
+    assert response.status_code == 200
