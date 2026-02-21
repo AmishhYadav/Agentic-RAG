@@ -24,7 +24,8 @@ class VerifierAgent:
         )
 
         system_prompt = (
-            "You are a Verification Agent. Verify the following answer against the provided context. "
+            "You are a Verification Agent. Verify the following answer against "
+            "the provided context. "
             "The answer must be fully supported by the context. "
             "Return strict JSON: "
             '{"is_valid": bool, "reasoning": str}'

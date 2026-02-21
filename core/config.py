@@ -43,8 +43,8 @@ def get_llm_config(tier: str = "smart"):
 
 
 def print_config():
-    print(f"--- Configuration ---")
+    print("--- Configuration ---")
     print(f"Environment: {APP_ENV}")
     print(f"LLM Provider: {LLM_PROVIDER}")
     print(f"Base Dir: {BASE_DIR}")
-    print(f"---------------------")
+    print("---------------------")

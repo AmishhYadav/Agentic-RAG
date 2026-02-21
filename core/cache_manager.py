@@ -90,7 +90,8 @@ class SemanticCache:
         """Store a query-answer pair in the cache."""
         conn = sqlite3.connect(str(self.db_path))
         conn.execute(
-            "INSERT INTO query_cache (query, query_vector, answer, sources, verification) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO query_cache (query, query_vector, answer, sources, verification) "
+            "VALUES (?, ?, ?, ?, ?)",
             (
                 query,
                 query_vector.astype(np.float32).tobytes(),

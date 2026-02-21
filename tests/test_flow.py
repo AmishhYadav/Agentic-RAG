@@ -1,4 +1,3 @@
-import os
 import sys
 import unittest
 from pathlib import Path
@@ -6,7 +5,7 @@ from pathlib import Path
 # Add project root to path
 sys.path.append(str(Path(__file__).parent.parent))
 
-from core.agent_router import AgentRouter
+from core.agent_router import AgentRouter  # noqa: E402
 
 
 class TestAgentFlow(unittest.TestCase):
@@ -15,7 +14,8 @@ class TestAgentFlow(unittest.TestCase):
         # Ensure we are in mock mode for consistent testing
         if self.router.config["provider"] != "mock":
             print(
-                f"WARNING: Running tests with provider {self.router.config['provider']}. Mock is recommended."
+                f"WARNING: Running tests with provider {self.router.config['provider']}. "
+                f"Mock is recommended."
             )
 
     def run_query(self, query):

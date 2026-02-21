@@ -10,7 +10,7 @@ from sentence_transformers import SentenceTransformer
 
 # Add parent directory to path to import config
 sys.path.append(str(Path(__file__).parent.parent))
-from core.config import DATA_DIR, EMBEDDING_MODEL_NAME, FAISS_INDEX_PATH
+from core.config import DATA_DIR, EMBEDDING_MODEL_NAME, FAISS_INDEX_PATH  # noqa: E402
 
 
 def ingest_documents():
