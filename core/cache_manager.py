@@ -29,8 +29,7 @@ class SemanticCache:
 
     def _init_db(self):
         conn = sqlite3.connect(str(self.db_path))
-        conn.execute(
-            """
+        conn.execute("""
             CREATE TABLE IF NOT EXISTS query_cache (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 query TEXT NOT NULL,
@@ -40,8 +39,7 @@ class SemanticCache:
                 verification TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
-        """
-        )
+        """)
         conn.commit()
         conn.close()
 
