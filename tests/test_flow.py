@@ -13,6 +13,9 @@ from core.config import LLM_PROVIDER  # noqa: E402
 class TestAgentFlow(IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         self.router = AgentRouter()
+        # Clear semantic cache to ensure isolated test runs
+        self.router.cache.clear()
+
         # Ensure we are in mock mode for consistent testing
         if LLM_PROVIDER != "mock":
             print(f"WARNING: Running tests with provider {LLM_PROVIDER}. " f"Mock is recommended.")
